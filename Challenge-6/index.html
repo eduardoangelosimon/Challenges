@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeno's Paradox: Achilles and the Tortoise</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .description {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .animation-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .track {
+        position: relative;
+        height: 120px;
+        background: linear-gradient(to right, #4caf50, #45a049);
+        border-radius: 10px;
+        margin: 20px 0;
+        overflow: hidden;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .finish-line {
+        position: absolute;
+        right: 50px;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: repeating-linear-gradient(
+          to bottom,
+          #ff4444,
+          #ff4444 10px,
+          #ffffff 10px,
+          #ffffff 20px
+        );
+        box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+      }
+
+      .character {
+        position: absolute;
+        bottom: 10px;
+        font-size: 40px;
+        transition: left 0.5s ease-in-out;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .achilles {
+        left: 20px;
+      }
+
+      .tortoise {
+        left: 200px;
+      }
+
+      .controls {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      button {
+        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        margin: 0 10px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      button:disabled {
+        background: #666;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .info-panel {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .step-info {
+        margin: 10px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        border-left: 4px solid #ff6b6b;
+      }
+
+      .step-number {
+        font-weight: bold;
+        color: #ff6b6b;
+      }
+
+      .position-display {
+        display: flex;
+        justify-content: space-around;
+        margin: 15px 0;
+        font-weight: bold;
+      }
+
+      .character-info {
+        text-align: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .explanation {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        font-style: italic;
+        border-left: 4px solid #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🏃‍♂️ Zeno's Paradox: Achilles and the Tortoise 🐢</h1>
+      <p class="description">
+        Watch as Achilles tries to catch up to the tortoise, demonstrating the
+        famous paradox where he must always reach where the tortoise was, but
+        never where it is.
+      </p>
+
+      <div class="animation-container">
+        <div class="track">
+          <div class="finish-line"></div>
+          <div class="character achilles" id="achilles">🏃‍♂️</div>
+          <div class="character tortoise" id="tortoise">🐢</div>
+        </div>
+
+        <div class="controls">
+          <button onclick="startAnimation()">Start Race</button>
+          <button onclick="nextStep()">Next Step</button>
+          <button onclick="resetAnimation()">Reset</button>
+          <button onclick="toggleAutoMode()">Auto Mode</button>
+        </div>
+
+        <div class="position-display">
+          <div class="character-info">
+            <div>Achilles 🏃‍♂️</div>
+            <div>Position: <span id="achilles-pos">20</span>px</div>
+          </div>
+          <div class="character-info">
+            <div>Tortoise 🐢</div>
+            <div>Position: <span id="tortoise-pos">200</span>px</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h3>Current Step: <span id="step-counter">0</span></h3>
+        <div id="step-info" class="step-info">
+          Click "Start Race" or "Next Step" to begin the demonstration!
+        </div>
+
+        <div class="explanation">
+          <h4>🧠 The Paradox Explained:</h4>
+          <p>
+            Zeno argued that Achilles can never overtake the tortoise because:
+            <br />• Every time Achilles reaches where the tortoise was, the
+            tortoise has moved a bit further <br />• This creates an infinite
+            sequence of smaller distances <br />• Theoretically, Achilles must
+            complete infinitely many steps <br /><br />
+            <strong>Resolution:</strong> The infinite series converges to a
+            finite time, allowing Achilles to actually catch up in real time!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="Challenge-6.js"></script>
+  </body>
+</html>
