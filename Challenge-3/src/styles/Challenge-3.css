@@ -1,0 +1,139 @@
+:root {
+  --gap-size: 4px;
+
+  --font-primary: Arial, sans-serif;
+  --font-size-sm: 14px;
+  --font-size-lg: 24px;
+  --line-height-base: 1.4;
+
+  --color-text: #fff;
+  --color-header: #5dcedc;
+  --color-hero: #d8b8e8;
+  --color-sidebar: #a8d8a8;
+  --color-main: #f4c842;
+  --color-extra: #888;
+  --color-related-images: #4caf50;
+  --color-related-posts: #f8c8d8;
+  --color-footer: #f90;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: var(--font-primary);
+  gap: var(--gap-size);
+}
+
+.main-content,
+.left-side,
+.right-side,
+.bottom-section {
+  display: flex;
+  gap: var(--gap-size);
+}
+
+.main-content {
+  flex: 1;
+}
+.left-side,
+.right-side {
+  flex-direction: column;
+}
+.main-content .left-side {
+  flex: 1;
+}
+.main-content .right-side {
+  flex: 2;
+}
+
+.header,
+.hero,
+.sidebar,
+.main,
+.extra,
+.related-images,
+.related-posts,
+.footer {
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  text-align: center;
+}
+
+.hero,
+.sidebar,
+.main,
+.extra,
+.related-images,
+.related-posts {
+  display: flex;
+}
+
+.hero,
+.sidebar,
+.extra,
+.related-images,
+.related-posts {
+  justify-content: center;
+}
+
+.header {
+  background: var(--color-header);
+  padding: 20px;
+}
+
+.hero {
+  background: var(--color-hero);
+  padding-top: 40px;
+  flex: 1;
+}
+
+.sidebar {
+  background: var(--color-sidebar);
+  padding-top: 40px;
+  flex: 2;
+}
+
+.main {
+  background: var(--color-main);
+  padding: 40px;
+  flex: 2;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-title {
+  font-size: var(--font-size-lg);
+  margin-bottom: 10px;
+}
+
+.main-description {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+}
+
+.extra {
+  background: var(--color-extra);
+  padding-top: 40px;
+  flex: 1;
+}
+
+.related-images {
+  background: var(--color-related-images);
+  padding: 20px 0;
+  flex: 2;
+}
+
+.related-posts {
+  background: var(--color-related-posts);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex: 1;
+}
+
+.footer {
+  background: var(--color-footer);
+  padding: 20px;
+}
